@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Form Page</title>
+</head>
+<body>
+  <h2>Enter your details</h2>
+  <form id="myForm">
+    <input type="text" id="name" placeholder="Name" required><br><br>
+    <input type="text" id="wishes" placeholder="Wishes" required><br><br>
+
+    <!-- PHOTO REQUIRED -->
+    <input type="file" id="photo" accept="image/*" required><br><br>
+
+    <button type="submit">Submit</button>
+  </form>
+
+<script>
+// Compress + Resize Function
+function resizeImage(file, maxSize, callback) {
+    const reader = new FileReader();
+    reader.onload = function(event) {
+        const img = new Image();
+        img.onload = function() {
+            const canvas = document.createElement("canvas");
+            const ctx = canvas.getContext("2d");
+
+            let width = img.width;
+            let height = img.height;
+
+            // Resize while keeping aspect ratio
+            if (width > height) {
+                if (width > maxSize) {
+                    height = height * (maxSize / width);
+                    width = maxSize;
+                }
+            } else {
+                if (height > maxSize) {
+                    width = width * (maxSize / height);
+                    height = maxSize;
+                }
+            }
+
+            canvas.width = width;
+            canvas.height = height;
+            ctx.drawImage(img, 0, 0, width, height);
+
+            const resizedData = canvas.toDataURL("image/jpeg", 0.7);
+            callback(resizedData);
+        };
+        img.src = event.target.result;
+    };
+    reader.readAsDataURL(file);
+}
+
+// Form Submit
+document.getElementById("myForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const name = document.getElementById("name").value;
+    const wishes = document.getElementById("wishes").value;
+    const file = document.getElementById("photo").files[0];
+
+    // If photo is missing → block submit
+    if (!file) {
+        alert("Please upload a photo.");
+        return;
+    }
+
+    // Save text
+    localStorage.setItem("name", name);
+    localStorage.setItem("wishes", wishes);
+
+    // Resize + save photo
+    resizeImage(file, 800, function(resizedImage) {
+        try {
+            localStorage.setItem("photo", resizedImage);
+            window.location.href = "second.html";
+        } catch (e) {
+            alert("Image still too large. Please upload a smaller photo.");
+        }
+    });
+});
+</script>
+
+</body>
+</html>
