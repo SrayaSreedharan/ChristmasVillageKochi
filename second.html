@@ -196,14 +196,22 @@
 @media (max-width: 1400px) {
   .poster-wrapper {
     transform: scale(calc(100vw / 1400));
-    margin-top: auto
+    display: flex;
+    justify-content: center;   /* horizontal */
+    align-items: center;       /* vertical */
+    overflow-x: hidden;
+   
   }
 }
 
 @media (max-width: 778px) {
   .poster-wrapper {
     transform: scale(calc(100vw / 1400));
-     margin-top: 250px;
+    display: flex;
+    justify-content: center;   /* horizontal */
+    align-items: center;       /* vertical */
+    overflow-x: hidden;
+    
   }
 }
 @media (max-width: 778px) {
@@ -217,16 +225,6 @@
     transform: translate(-50%, -50%) scale(0.75);
   }
 }
-@media (max-width: 778px) {
-  body {
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;   /* horizontal */
-    align-items: center;       /* vertical */
-    overflow-x: hidden;
-  }
-}
-
 @media (max-width: 480px) {
   .instagram-card {
     transform: translate(-50%, -50%) scale(0.68);
