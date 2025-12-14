@@ -38,9 +38,9 @@ body {
 /* ===================== MODAL ===================== */
 .modal {
   width: 280px;
-  background: #fff;
+  
   border-radius: 22px;
-  padding: 40px 20px 25px;
+  padding: 20px;
   position: relative;
   text-align: center;
   box-shadow: 0 20px 40px rgba(0,0,0,0.35);
@@ -131,7 +131,7 @@ body {
 }
 @media (max-width: 400px) {
   .wrapper {
-    top: 56.5%; /* 🔼 moved up from 63% */
+    top: 53%; 
     transform: translate(-50%, -50%) scale(0.82);
   }
   .modal {
@@ -149,10 +149,7 @@ body {
     padding: 36px 16px 18px;
     border-radius: 18px;
   }
-.wrapper {
-    top: 61%; /* 🔼 moved up from 63% */
-    transform: translate(-50%, -50%) scale(0.82);
-  }
+
    .avatar {
     width: 65px;
     height: 65px;
@@ -167,7 +164,10 @@ body {
   .avatar .upload-text {
     font-size: 9px;
   }
-
+.wrapper {
+    top: 56%; 
+    transform: translate(-50%, -50%) scale(0.82);
+  }
   /* Smaller input */
   .modal input {
     padding: 9px;
@@ -189,7 +189,10 @@ body {
     width: 220px;
     padding: 30px 14px 16px;
   }
-
+.wrapper {
+    top: 54%; 
+    transform: translate(-50%, -50%) scale(0.82);
+  }
   .avatar {
     width: 78px;
     height: 78px;
@@ -210,13 +213,19 @@ body {
   <div class="modal">
     <form id="myForm">
 
-      <label class="avatar">
+      <!-- <label class="avatar">
         <i class="fa-solid fa-camera" id="cameraIcon"></i>
         <span class="upload-text" id="uploadText">UPLOAD</span>
+       
         <img id="previewImg">
         <input type="file" id="photo" accept="image/*" required>
-      </label>
-
+      </label> -->
+      <input 
+    type="file" 
+    id="photo" 
+    accept="image/*" 
+    required
+  >
       <input type="text" id="userNameInput" placeholder="Your Name" required>
 
       <button type="submit">Create My Christmas Village Poster</button>
