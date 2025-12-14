@@ -112,7 +112,7 @@
         <img id="previewImg">
         <input type="file" id="photo" accept="image/*" required>
       </label>
-      <input type="text" id="name" placeholder="Your Name" required>
+      <input type="text" id="userNameInput" placeholder="Your Name" required>
       <input type="text" id="wishes" placeholder="Wishes" required>
       <button type="submit">
         SEND CHEER <i class="fa-solid fa-gift"></i>
@@ -167,8 +167,8 @@ document.getElementById("myForm").addEventListener("submit", e => {
 
   const file = photo.files[0];
   if (!file) return alert("Please upload a photo");
-
-  localStorage.setItem("name", name.value);
+const userName = document.getElementById("userNameInput").value;
+  localStorage.setItem("name", userName);
   localStorage.setItem("wishes", wishes.value);
 
   resizeImage(file, 800, img => {
