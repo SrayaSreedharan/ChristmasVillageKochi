@@ -178,7 +178,7 @@
 
 .download-mode .instagram-card {
   top: 160px !important;   
-  left: 30px !important; 
+  left: 30px !important; /* 🎯 FIXED PIXEL */
   transform: none !important;
 }
 
@@ -233,14 +233,6 @@
     object-fit: cover;
   }
 }
-.download-mode {
-  display: block !important;
-  margin: 0 auto !important;
-  width: auto !important;
-  height: auto !important;
-  transform: none !important;
-}
-
 /* ===buttons==== */
 .poster-actions {
   display: flex;
@@ -342,7 +334,7 @@ document.getElementById("downloadBtn").addEventListener("click", async () => {
     useCORS: true,
     backgroundColor: null,
     width: 720,
-    height: 900
+    height: 600
   }).then(canvas => {
     const link = document.createElement("a");
     link.download = "christmas-village-kochi.png";
