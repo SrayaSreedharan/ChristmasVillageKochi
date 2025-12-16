@@ -300,16 +300,34 @@ window.onload = function(){
 <!-- downlad button -->
 <script>
 document.getElementById("downloadBtn").addEventListener("click", async () => {
-  const poster = document.querySelector(".poster-wrapper");
 
-  // Save current transform
-  const originalTransform = poster.style.transform;
+  const original = document.querySelector(".poster-wrapper");
 
-  // REMOVE SCALE before capture
-  poster.style.transform = "none";
+  // 1️⃣ Clone poster
+  const clone = original.cloneNode(true);
 
-  await html2canvas(poster, {
-    scale: window.devicePixelRatio || 2,
+  // 2️⃣ HARD RESET styles (very important)
+  clone.style.transform = "none";
+  clone.style.width = "720px";
+  clone.style.height = "900px";
+  clone.style.maxWidth = "none";
+  clone.style.position = "fixed";
+  clone.style.left = "-9999px";
+  clone.style.top = "0";
+  clone.style.margin = "0";
+
+  // Fix background image
+  const bg = clone.querySelector(".bg-img");
+  bg.style.width = "720px";
+  bg.style.height = "900px";
+  bg.style.objectFit = "cover";
+
+  // 3️⃣ Append clone to DOM
+  document.body.appendChild(clone);
+
+  // 4️⃣ Capture CLONE (not original)
+  await html2canvas(clone, {
+    scale: 2,
     useCORS: true,
     backgroundColor: null
   }).then(canvas => {
@@ -319,10 +337,11 @@ document.getElementById("downloadBtn").addEventListener("click", async () => {
     link.click();
   });
 
-  // Restore transform after capture
-  poster.style.transform = originalTransform;
+  // 5️⃣ Cleanup
+  document.body.removeChild(clone);
 });
 </script>
+
 
 <!-- whatsapp button -->
  <script>
