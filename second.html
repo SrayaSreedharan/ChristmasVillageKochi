@@ -162,6 +162,11 @@
   border-radius: 18px;
   box-shadow: 0 15px 40px rgba(0,0,0,0.6);
 }
+.poster-wrapper {
+  width: 100%;
+  max-width: 720px;   /* poster logical width */
+  margin: 0 auto;
+}
 
 /* DOWNLOAD MODE */
 /* ===== DOWNLOAD MODE FIX ===== */
@@ -179,17 +184,17 @@
 
 
 /* Mobile: keep same poster, just move card */
-@media (max-width: 1400px) {
+/* @media (max-width: 1400px) {
   .poster-wrapper {
     transform: scale(calc(100vw / 500));
    
   }
-}
-@media (max-width: 778px) {
+} */
+/* @media (max-width: 778px) {
   .poster-wrapper {
     transform: scale(calc(100vw / 1400));   
   }
-}
+} */
 @media (max-width: 778px) {
   .instagram-card {
     transform: translate(-50%, -50%) scale(0.85);
