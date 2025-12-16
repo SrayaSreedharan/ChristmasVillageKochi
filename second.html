@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Christmas Village Kochi - Visitor</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Dancing+Script:wght@700&display=swap');
     body{
@@ -213,10 +214,33 @@
     object-fit: cover;
   }
 }
+/* ===buttons==== */
+.poster-actions {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin: 25px 0;
+}
+.poster-actions button {
+  background: #25d366; 
+  color: #fff;
+  border: none;
+  padding: 12px 22px;
+  border-radius: 30px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+}
 </style>
 </head>
 <body>
 <body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <div>
   <div class="poster-wrapper">
   <img src="Background.webp" alt="Poster" class="bg-img">
     <div class="instagram-card">
@@ -248,6 +272,16 @@
       </div>
     </div>
   </div>
+ <div class="poster-actions">
+  <button id="downloadBtn" style="background-color: #00376b;">
+    <i class="fa-solid fa-download"></i> Download
+  </button>
+  <button id="shareBtn">
+    <i class="fa-brands fa-whatsapp"></i> Share
+  </button>
+</div>
+
+  </div>
 </body>
 <script>
 window.onload = function(){
@@ -263,5 +297,34 @@ window.onload = function(){
     }
 };
 </script>
+<!-- downlad button -->
+ <script>
+document.getElementById("downloadBtn").addEventListener("click", () => {
+  const poster = document.querySelector(".poster-wrapper");
+
+  html2canvas(poster, {
+    scale: 2,
+    useCORS: true
+  }).then(canvas => {
+    const link = document.createElement("a");
+    link.download = "christmas-village-kochi.png";
+    link.href = canvas.toDataURL("image/png");
+    link.click();
+  });
+});
+</script>
+<!-- whatsapp button -->
+ <script>
+document.getElementById("shareBtn").addEventListener("click", () => {
+  const name = document.getElementById("userName").textContent;
+  const text = `🎄 ${name} is visiting Christmas Village Kochi!\nCheck this out 🎅✨`;
+
+  const whatsappURL =
+    "https://wa.me/?text=" + encodeURIComponent(text);
+
+  window.open(whatsappURL, "_blank");
+});
+</script>
+
 </body>
 </html>
