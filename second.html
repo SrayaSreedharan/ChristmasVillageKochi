@@ -350,15 +350,36 @@ document.getElementById("downloadBtn").addEventListener("click", async () => {
 
 <!-- whatsapp button -->
  <script>
-document.getElementById("shareBtn").addEventListener("click", () => {
-  const name = document.getElementById("userName").textContent;
-  const text = `🎄 ${name} is visiting Christmas Village Kochi!\nCheck this out 🎅✨`;
+document.getElementById("shareBtn").addEventListener("click", async () => {
+  const poster = document.querySelector(".poster-wrapper");
 
-  const whatsappURL =
-    "https://wa.me/?text=" + encodeURIComponent(text);
+  // Temporarily enable download mode for full poster
+  poster.classList.add("download-mode");
+  await new Promise(r => setTimeout(r, 300));
 
-  window.open(whatsappURL, "_blank");
+  // Capture poster
+  const canvas = await html2canvas(poster, { scale: 2, useCORS: true, backgroundColor: null });
+  poster.classList.remove("download-mode");
+
+  // Convert to blob
+  canvas.toBlob(async (blob) => {
+    const filesArray = [new File([blob], "poster.png", { type: "image/png" })];
+
+    // Use Web Share API
+    if (navigator.canShare && navigator.canShare({ files: filesArray })) {
+      navigator.share({
+        files: filesArray,
+        text: "🎄 Check out my visit to Christmas Village Kochi! 🎅✨",
+        title: "Christmas Village Kochi"
+      })
+      .then(() => console.log("Shared successfully"))
+      .catch((err) => console.error(err));
+    } else {
+      alert("Your browser does not support direct image sharing. Please download and share manually.");
+    }
+  });
 });
+
 </script>
 
 </body>
