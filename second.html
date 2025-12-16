@@ -298,21 +298,32 @@ window.onload = function(){
 };
 </script>
 <!-- downlad button -->
- <script>
-document.getElementById("downloadBtn").addEventListener("click", () => {
+<script>
+document.getElementById("downloadBtn").addEventListener("click", async () => {
   const poster = document.querySelector(".poster-wrapper");
 
-  html2canvas(poster, {
-    scale: 2,
-    useCORS: true
+  // Save current transform
+  const originalTransform = poster.style.transform;
+
+  // REMOVE SCALE before capture
+  poster.style.transform = "none";
+
+  await html2canvas(poster, {
+    scale: window.devicePixelRatio || 2,
+    useCORS: true,
+    backgroundColor: null
   }).then(canvas => {
     const link = document.createElement("a");
     link.download = "christmas-village-kochi.png";
     link.href = canvas.toDataURL("image/png");
     link.click();
   });
+
+  // Restore transform after capture
+  poster.style.transform = originalTransform;
 });
 </script>
+
 <!-- whatsapp button -->
  <script>
 document.getElementById("shareBtn").addEventListener("click", () => {
