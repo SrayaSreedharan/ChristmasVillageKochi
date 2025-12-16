@@ -350,37 +350,32 @@ document.getElementById("downloadBtn").addEventListener("click", async () => {
 
 <!-- whatsapp button -->
  <script>
-const poster = document.querySelector(".poster-wrapper");
-const instagramCard = poster.querySelector(".instagram-card");
-
-// DOWNLOAD BUTTON
-document.getElementById("downloadBtn").addEventListener("click", async () => {
-  poster.classList.add("download-mode");
-  instagramCard.style.transform = "none"; // remove scale for download
-  await new Promise(r => setTimeout(r, 300));
-
-  const canvas = await html2canvas(poster, { scale: 2, useCORS: true, backgroundColor: null });
-  
-  const link = document.createElement("a");
-  link.download = "christmas-village-kochi.png";
-  link.href = canvas.toDataURL("image/png");
-  link.click();
-
-  // restore transform
-  instagramCard.style.transform = "";
-  poster.classList.remove("download-mode");
-});
-
-// SHARE BUTTON
 document.getElementById("shareBtn").addEventListener("click", async () => {
+  const poster = document.querySelector(".poster-wrapper");
+  const instagramCard = poster.querySelector(".instagram-card");
+
+  // 1️⃣ Enable download mode (same as your download button)
   poster.classList.add("download-mode");
-  instagramCard.style.transform = "none"; // remove scale
+
+  // 2️⃣ Temporarily remove scale/transform from Instagram card
+  const originalTransform = instagramCard.style.transform;
+  instagramCard.style.transform = "none";
+
+  // 3️⃣ Wait for layout to update
   await new Promise(r => setTimeout(r, 300));
 
-  const canvas = await html2canvas(poster, { scale: 2, useCORS: true, backgroundColor: null });
-  poster.classList.remove("download-mode");
-  instagramCard.style.transform = "";
+  // 4️⃣ Capture poster with html2canvas
+  const canvas = await html2canvas(poster, {
+    scale: 2,           // higher resolution
+    useCORS: true,
+    backgroundColor: null
+  });
 
+  // 5️⃣ Restore transform and remove download mode
+  instagramCard.style.transform = originalTransform;
+  poster.classList.remove("download-mode");
+
+  // 6️⃣ Convert canvas to blob and share using Web Share API
   canvas.toBlob((blob) => {
     const filesArray = [new File([blob], "poster.png", { type: "image/png" })];
 
@@ -391,10 +386,9 @@ document.getElementById("shareBtn").addEventListener("click", async () => {
         title: "Christmas Village Kochi"
       })
       .then(() => console.log("Shared successfully"))
-      .catch(err => console.error(err));
+      .catch((err) => console.error("Share failed:", err));
     } else {
-      // Fallback: download manually
-      alert("Your browser cannot share images directly. Please download and share manually.");
+      alert("Your browser does not support direct image sharing. Please download and share manually.");
     }
   });
 });
