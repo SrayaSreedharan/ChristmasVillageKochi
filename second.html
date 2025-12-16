@@ -155,15 +155,29 @@
 .instagram-card {
   position: absolute;
   left: 30%;
-  top: 50%;
+  top: 40%;
   transform: translate(-50%, -50%);
   width: 300px;
-  max-height:550px ;
+  max-height:650px ;
   background: white;
   color: black;
   border-radius: 18px;
   box-shadow: 0 15px 40px rgba(0,0,0,0.6);
 }
+/* DOWNLOAD MODE */
+.download-mode {
+  transform: none !important;
+  width: 720px !important;
+  height: 900px !important;
+  max-width: none !important;
+}
+
+.download-mode .instagram-card {
+  left: 35% !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+}
+
 /* Mobile: keep same poster, just move card */
 @media (max-width: 1400px) {
   .poster-wrapper {
@@ -201,9 +215,9 @@
 }
 @media (max-width: 420px) {
   .instagram-card {
-    max-height: 460px;     
+    max-height: 500px;     
     overflow: hidden;  
-    /* max-width: 270px;     */
+    max-width: 270px;    
   }
   .image-container {
     max-height: 220px;    
@@ -301,47 +315,33 @@ window.onload = function(){
 <script>
 document.getElementById("downloadBtn").addEventListener("click", async () => {
 
-  const original = document.querySelector(".poster-wrapper");
+  const poster = document.querySelector(".poster-wrapper");
 
-  // 1️⃣ Clone poster
-  const clone = original.cloneNode(true);
+  // 1️⃣ Enable download mode
+  poster.classList.add("download-mode");
 
-  // 2️⃣ HARD RESET styles (very important)
-  clone.style.transform = "none";
-  clone.style.width = "720px";
-  clone.style.height = "900px";
-  clone.style.maxWidth = "none";
-  clone.style.position = "fixed";
-  clone.style.left = "-9999px";
-  clone.style.top = "0";
-  clone.style.margin = "0";
+  // 2️⃣ Wait for layout to settle
+  await new Promise(r => setTimeout(r, 300));
 
-  // Fix background image
-  const bg = clone.querySelector(".bg-img");
-  bg.style.width = "720px";
-  bg.style.height = "900px";
-  bg.style.objectFit = "cover";
-
-  // 3️⃣ Append clone to DOM
-  document.body.appendChild(clone);
-
-  // 4️⃣ Capture CLONE (not original)
-  await html2canvas(clone, {
+  // 3️⃣ Capture
+  html2canvas(poster, {
     scale: 2,
     useCORS: true,
-    backgroundColor: null
+    backgroundColor: null,
+    width: 720,
+    height: 900
   }).then(canvas => {
     const link = document.createElement("a");
     link.download = "christmas-village-kochi.png";
     link.href = canvas.toDataURL("image/png");
     link.click();
+  }).finally(() => {
+    // 4️⃣ Restore screen mode
+    poster.classList.remove("download-mode");
   });
 
-  // 5️⃣ Cleanup
-  document.body.removeChild(clone);
 });
 </script>
-
 
 <!-- whatsapp button -->
  <script>
