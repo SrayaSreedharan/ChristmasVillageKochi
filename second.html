@@ -154,29 +154,29 @@
 }
 .instagram-card {
   position: absolute;
-  left: 30%;
-  top: 40%;
-  transform: translate(-50%, -50%);
+  top: 42%;
+  left: 32%;
+  transform: translateY(-50%);
   width: 300px;
-  max-height:650px ;
   background: white;
-  color: black;
   border-radius: 18px;
   box-shadow: 0 15px 40px rgba(0,0,0,0.6);
 }
+
 /* DOWNLOAD MODE */
+/* ===== DOWNLOAD MODE FIX ===== */
 .download-mode {
-  transform: none !important;
   width: 720px !important;
   height: 900px !important;
-  max-width: none !important;
+  transform: none !important;
 }
 
 .download-mode .instagram-card {
-  left: 35% !important;
-  top: 50% !important;
-  transform: translateY(-50%) !important;
+  top: 160px !important;   /* 🎯 FIXED PIXEL */
+  left: 30px !important; /* 🎯 FIXED PIXEL */
+  transform: none !important;
 }
+
 
 /* Mobile: keep same poster, just move card */
 @media (max-width: 1400px) {
