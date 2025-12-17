@@ -154,13 +154,14 @@
 }
 .instagram-card {
   position: absolute;
-  top: 310px;     /* FIXED pixels */
-  left: 120px;
+  top: 42%;
+  left: 27%;
+  transform: translateY(-50%);
   width: 300px;
   background: white;
   border-radius: 18px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.6);
 }
-
 .poster-wrapper {
   width: 100%;
   max-width: 720px;   /* poster logical width */
@@ -221,8 +222,7 @@
   .instagram-card {
     max-height: 500px;     
     overflow: hidden;  
-    max-width: 270px; 
-   
+    max-width: 270px;    
   }
   .image-container {
     max-height: 220px;    
@@ -268,6 +268,7 @@
     <i class="fa-brands fa-whatsapp"></i> Share
   </button>
 </div>
+
   <div class="poster-wrapper">
   <img src="secondimage.jpg" alt="Poster" class="bg-img">
     <div class="instagram-card">
@@ -300,7 +301,6 @@
     </div>
   </div>
  
-
   </div>
 </body>
 <script>
@@ -320,22 +320,33 @@ window.onload = function(){
 <!-- downlad button -->
 <script>
 document.getElementById("downloadBtn").addEventListener("click", async () => {
+
   const poster = document.querySelector(".poster-wrapper");
 
-  const canvas = await html2canvas(poster, {
+  // 1️⃣ Enable download mode
+  poster.classList.add("download-mode");
+
+  // 2️⃣ Wait for layout to settle
+  await new Promise(r => setTimeout(r, 300));
+
+  // 3️⃣ Capture
+  html2canvas(poster, {
     scale: 2,
     useCORS: true,
-    width: 1080,
-    height: 1350,
-    backgroundColor: null
+    backgroundColor: null,
+    width: 720,
+    height: 1200
+  }).then(canvas => {
+    const link = document.createElement("a");
+    link.download = "christmas-village-kochi.png";
+    link.href = canvas.toDataURL("image/png");
+    link.click();
+  }).finally(() => {
+    // 4️⃣ Restore screen mode
+    poster.classList.remove("download-mode");
   });
 
-  const link = document.createElement("a");
-  link.download = "christmas-village-kochi.png";
-  link.href = canvas.toDataURL("image/png");
-  link.click();
 });
-
 </script>
 
 <!-- whatsapp button -->
